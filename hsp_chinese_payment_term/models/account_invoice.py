@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
+import math
 from dateutil.relativedelta import relativedelta
 import logging
 
@@ -52,7 +53,7 @@ class AccountPaymentTerm(models.Model):
                     tem = line.days%30
                     if tem == 0:
                         tem = 30
-                    tem_month = line.days//30
+                    tem_month = math.ceil(line.days/30.0)
                     next_date += relativedelta(day=tem, months=tem_month)
                 result.append((fields.Date.to_string(next_date), amt))
                 amount -= amt
