@@ -19,7 +19,7 @@
         'base', 'account'
     ],
     'data': [
-        # 'views/account_view.xml'
+        'views/account_view.xml'
     ],
     # 'demo': [
     #     'demo/report.xml',

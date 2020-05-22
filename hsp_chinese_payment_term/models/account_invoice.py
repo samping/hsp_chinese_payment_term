@@ -12,6 +12,7 @@ class AccountPaymentTermLine(models.Model):
     _inherit = "account.payment.term.line"
 
     option = fields.Selection(selection_add=[('chinese_month_pay','月结')])#加选择项
+    start_day = fields.Integer(string='计费开始日',default=1,help='如果填1就是1号开始到月底，如果填26，就是: 上月26号 <= 订单 <= 当月25号')
 
 
 class AccountPaymentTerm(models.Model):
@@ -50,6 +51,11 @@ class AccountPaymentTerm(models.Model):
                     if tem == 0:
                         tem = 30
                     tem_month = math.ceil(line.days/30.0)
+                    tem_day = int(date_ref.strftime('%d'))
+                    if line.start_day == 1 :
+                        pass
+                    elif tem_day >= line.start_day:
+                        tem_month = tem_month + 1
                     next_date += relativedelta(day=tem, months=tem_month)
             result.append((fields.Date.to_string(next_date), amt))
             amount -= amt
